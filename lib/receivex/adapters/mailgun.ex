@@ -58,7 +58,7 @@ defmodule Receivex.Adapter.Mailgun do
         String.trim(result["email"])
       }
     else
-      address
+      {nil, address}
     end
   end
 
