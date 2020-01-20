@@ -50,12 +50,16 @@ defmodule Receivex.Adapter.Mailgun do
 
   @regex ~r/(?<name>.*)<(?<email>.*)>/
   defp parse_address(address) do
-    result = Regex.named_captures(@regex, address)
+    if(String.contains?(address, "<")) do
+      result = Regex.named_captures(@regex, address)
 
-    {
-      String.trim(result["name"]),
-      String.trim(result["email"])
-    }
+      {
+        String.trim(result["name"]),
+        String.trim(result["email"])
+      }
+    else
+      address
+    end
   end
 
   defp recipients(%{"To" => recipients}) do
